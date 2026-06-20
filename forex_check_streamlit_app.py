@@ -1083,7 +1083,7 @@ def run_streamlit_app() -> None:
 
     with tab_filter:
         st.subheader("Посчитать сумму по фильтру")
-        st.caption("Фильтры можно комбинировать: название, гео, дата, EDIT, кабинет/T2A.")
+        st.caption("Фильтры можно комбинировать: название, гео, дата и кабинет/T2A. EDIT можно искать через поле «Название содержит».")
 
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -1093,8 +1093,7 @@ def run_streamlit_app() -> None:
         with col2:
             date_values = sorted(x for x in df["Дата"].dropna().unique().tolist() if x)
             dates = st.multiselect("Дата", date_values)
-            edit_values = sorted(x for x in df["EDIT"].dropna().unique().tolist() if x)
-            edits = st.multiselect("EDIT", edit_values)
+            edits = []
         with col3:
             cabinet_values = sorted(x for x in df["Кабинет/T2A"].dropna().unique().tolist() if x)
             cabinets = st.multiselect("Кабинет / T2A", cabinet_values)
@@ -1130,7 +1129,7 @@ def run_streamlit_app() -> None:
         cpa_cols[1].metric("Общая цена диа", "0" if not chat_sum else app_money_metric(spend_sum / float(chat_sum)))
 
         show_cols = [
-            "Статус", "Название", "Гео", "Дата", "EDIT", "Кабинет/T2A", "Бюджет",
+            "Статус", "Название", "Гео", "Дата", "Кабинет/T2A", "Бюджет",
             "Расход", "ПДП", "Диа", "Цена ПДП", "Цена диа", "Клики", "Просмотры",
         ]
         show_cols = [col for col in show_cols if col in filtered.columns]
